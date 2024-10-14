@@ -26,7 +26,7 @@ jobs:
       
     - name: Build Application
       run: |
-         docker build -t i533542/test01 
+         docker build -t i533542/test01 ./
          echo "Building the application..."
 
 
