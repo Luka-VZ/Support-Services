@@ -52,13 +52,13 @@ jobs:
               cd apache-docker
   
               echo "Pulling the new image..."
-              sudo docker pull i533542/test01  # Pull the image on the remote Docker server
-  
+              echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker pull i533542/test01  # Pull the image on the remote Docker server
+
               echo "Stopping current containers..."
-              sudo docker-compose down  # Stop the current running containers
-  
+              echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker-compose down  # Stop the current running containers
+
               echo "Starting new containers..."
-              sudo docker-compose up -d  # Start the new containers
+              echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker-compose up -d  # Start the new containers
           EOF
     
     # - name: Run Tests
