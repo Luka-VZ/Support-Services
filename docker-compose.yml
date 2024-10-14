@@ -7,7 +7,7 @@ services:
     ports:
       - "8081:80"  # Expose web1 on port 8081
     volumes:
-      - ./html1:/usr/local/apache2/htdocs/
+      - ./websites/html1:/usr/local/apache2/htdocs/
     restart: always
 
   web2:
@@ -16,7 +16,7 @@ services:
     ports:
       - "8082:80"  # Expose web2 on port 8082
     volumes:
-      - ./html2:/usr/local/apache2/htdocs/
+      - ./websites/html2:/usr/local/apache2/htdocs/
     restart: always
 
   web3:
@@ -25,5 +25,5 @@ services:
     ports:
       - "8083:80"  # Expose web3 on port 8083
     volumes:
-      - ./html3:/usr/local/apache2/htdocs/
+      - ./websites/html3:/usr/local/apache2/htdocs/
     restart: always
