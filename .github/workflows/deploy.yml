@@ -1,11 +1,14 @@
 name: Blue-Green Deployment
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
-  schedule:
-    - cron: '0 0 * * *' # This runs every day at 00:00 UTC
-  workflow_dispatch: # Manual trigger
+    push:  # This will trigger the workflow on push events
+      branches:
+        - main  # Specify the branch to listen for pushes. Change as needed.
+    pull_request:
+      types: [opened, synchronize, reopened]
+    schedule:
+      - cron: '0 0 * * *' # This runs every day at 00:00 UTC
+    workflow_dispatch: # Manual trigger
 
 jobs:
   deploy:
