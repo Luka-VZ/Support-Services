@@ -14,31 +14,43 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+     
+    - name: log in to duckerhub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
       
     - name: Build Application
       run: |
-        # Add your build commands here
-        echo "Building the application..."
+         docker build -t i533542/test01 ./websites
+         echo "Building the application..."
+
+
+    - name: Push to Docker Hub
+      run: |
+        docker push i533542/test01
+        echo "Pushing the image to Docker Hub..."
         
-    - name: Run Tests
-      run: |
-        # Add your test commands here
-        echo "Running tests..."
+    # - name: Run Tests
+    #   run: |
+    #     # Add your test commands here
+    #     echo "Running tests..."
 
-    - name: Deploy to Inactive Environment
-      run: |
-        # Add commands to deploy to the green environment (inactive)
-        echo "Deploying to inactive environment..."
+    # - name: Deploy to Inactive Environment
+    #   run: |
+    #     # Add commands to deploy to the green environment (inactive)
+    #     echo "Deploying to inactive environment..."
 
-    - name: Await Approval for Production
-      id: approval
-      run: |
-        echo "Waiting for approval..."
-        # Simulate waiting for approval
-        # You could implement a check here based on your approval process
+    # - name: Await Approval for Production
+    #   id: approval
+    #   run: |
+    #     echo "Waiting for approval..."
+    #     # Simulate waiting for approval
+    #     # You could implement a check here based on your approval process
 
-    - name: Switch to Active Environment
-      if: steps.approval.outputs.approved == 'true' # Check if approved
-      run: |
-        echo "Switching to the inactive environment (now active)..."
-        # Add commands to switch the routing in HAProxy or your load balancer
+    # - name: Switch to Active Environment
+    #   if: steps.approval.outputs.approved == 'true' # Check if approved
+    #   run: |
+    #     echo "Switching to the inactive environment (now active)..."
+    #     # Add commands to switch the routing in HAProxy or your load balancer 
