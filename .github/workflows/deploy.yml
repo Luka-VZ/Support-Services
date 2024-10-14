@@ -52,13 +52,13 @@ jobs:
               cd apache-docker
   
               echo "Pulling the new image..."
-              docker pull i533542/test01  # Pull the image on the remote Docker server
+              sudo docker pull i533542/test01  # Pull the image on the remote Docker server
   
               echo "Stopping current containers..."
-              docker-compose down  # Stop the current running containers
+              sudo docker-compose down  # Stop the current running containers
   
               echo "Starting new containers..."
-              docker-compose up -d  # Start the new containers
+              sudo docker-compose up -d  # Start the new containers
           EOF
     
     # - name: Run Tests
