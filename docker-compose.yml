@@ -2,28 +2,22 @@ version: '3.8'
 
 services:
   web1:
-    build: .
+    image: i533542/test01
     container_name: apache_server1
     ports:
       - "8081:80"  # Expose web1 on port 8081
-    volumes:
-      - ./websites/html1:/usr/local/apache2/htdocs/
     restart: always
 
   web2:
-    build: .
+    image: i533542/test01
     container_name: apache_server2
     ports:
       - "8082:80"  # Expose web2 on port 8082
-    volumes:
-      - ./websites/html2:/usr/local/apache2/htdocs/
     restart: always
 
   web3:
-    build: .
+    image: i533542/test01
     container_name: apache_server3
     ports:
       - "8083:80"  # Expose web3 on port 8083
-    volumes:
-      - ./websites/html3:/usr/local/apache2/htdocs/
     restart: always
