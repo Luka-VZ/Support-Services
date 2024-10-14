@@ -12,7 +12,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted  # Use your self-hosted runner
     
     steps:
     - name: Checkout code
@@ -34,6 +34,18 @@ jobs:
       run: |
         docker push i533542/test01
         echo "Pushing the image to Docker Hub..."
+
+
+    - name: Deploy to Remote Server
+      run: |
+        ssh -o StrictHostKeyChecking=no student@172.16.2.43 << 'EOF'
+          docker pull i533542/test01  # Pull the image on the remote Docker server
+          docker-compose down  # Stop the current running containers
+          docker-compose up -d  # Start the new containers
+        EOF
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
         
     # - name: Run Tests
     #   run: |
