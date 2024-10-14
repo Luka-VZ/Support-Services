@@ -2,4 +2,4 @@
 FROM httpd:latest
 
 # Copy the HTML files to the appropriate directory in the container
-COPY ./website/ /usr/local/apache2/htdocs/
+COPY ./websites/ /usr/local/apache2/htdocs/
