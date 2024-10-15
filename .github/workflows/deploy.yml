@@ -76,11 +76,10 @@ jobs:
   deploy-test:
       runs-on: self-hosted  # Use your self-hosted runner to deploy on the remote Docker server
       needs: deploy-dev  
-      environment: production  # This requires manual approval to deploy to 'production'
+      #environment: production  # This requires manual approval to deploy to 'production'
       
       steps:
       - name: Setup SSH
-        if: steps.approval.outputs.approved == 'true' # Check if approved
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_BLUE }}
