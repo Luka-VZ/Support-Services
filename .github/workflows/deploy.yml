@@ -87,7 +87,8 @@ jobs:
       - name: Setup files
         run: |
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2000 student@172.16.2.40 "mkdir -p ~/apache-docker"
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ./docker-compose.yml  -p 2000 student@172.16.2.40:~/apache-docker/docker-compose.yml
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2000 ./docker-compose.yml student@172.16.2.40:~/apache-docker/docker-compose.yml
+          
 
 
       - name: Deploy to dev Server
