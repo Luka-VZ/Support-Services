@@ -118,7 +118,7 @@ jobs:
         echo "Connecting to remote server..."
         ssh -o StrictHostKeyChecking=no student@172.16.2.40 << 'EOF'
             echo "Chaning traffic on proxy server..."
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo sh change_prod.sh # Runs script that switches traffic to the new containers
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S sh change_prod.sh # Runs script that switches traffic to the new containers
         EOF
       
 
