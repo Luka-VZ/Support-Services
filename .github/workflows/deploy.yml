@@ -93,7 +93,7 @@ jobs:
       - name: Deploy to dev Server
         run: |
           echo "Connecting to remote server..."
-          ssh -o StrictHostKeyChecking=no -p 2000 student@172.16.2.40 << 'EOF'
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2000 student@172.16.2.40 << 'EOF'
               echo "Navigating to docker-compose directory..."
               cd apache-docker
   
@@ -108,7 +108,7 @@ jobs:
           EOF
 
 
-  deploy-prod:
+  deploy-test-to-prod:
     runs-on: self-hosted  # Use your self-hosted runner to deploy on the remote Docker server
     needs: deploy-test  
     environment: production  # This requires manual approval to deploy to 'production'
