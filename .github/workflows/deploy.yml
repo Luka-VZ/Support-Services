@@ -50,8 +50,8 @@ jobs:
 
       - name: Setup files
         run: |
-            ssh -o StrictHostKeyChecking=no student@172.16.2.43 " echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S mkdir -p /apache-docker"
-            scp -o StrictHostKeyChecking=no ./docker-compose.yml student@172.16.2.43:/apache-docker/docker-compose.yml
+            ssh -o StrictHostKeyChecking=no student@172.16.2.43 " echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S mkdir -p ~/apache-docker"
+            scp -o StrictHostKeyChecking=no ./docker-compose.yml student@172.16.2.43:~/apache-docker/docker-compose.yml
   
       - name: Deploy to dev Server
         run: |
@@ -86,8 +86,8 @@ jobs:
 
       - name: Setup files
         run: |
-          ssh -o StrictHostKeyChecking=no  -p 2000 student@172.16.2.40 " echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S mkdir -p /apache-docker"
-          scp -o StrictHostKeyChecking=no ./docker-compose.yml  -p 2000 student@172.16.2.40:/apache-docker/docker-compose.yml
+          ssh -o StrictHostKeyChecking=no  -p 2000 student@172.16.2.40 "echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S mkdir -p ~/apache-docker"
+          scp -o StrictHostKeyChecking=no ./docker-compose.yml  -p 2000 student@172.16.2.40:~/apache-docker/docker-compose.yml
 
 
       - name: Deploy to dev Server
