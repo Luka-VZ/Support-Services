@@ -87,7 +87,7 @@ jobs:
       - name: Deploy to dev Server
         run: |
           echo "Connecting to remote server..."
-          ssh -o StrictHostKeyChecking=no student@172.16.2.44 << 'EOF'
+          ssh -o StrictHostKeyChecking=no -p 2000 student@172.16.2.40 << 'EOF'
               echo "Navigating to docker-compose directory..."
               cd apache-docker
   
