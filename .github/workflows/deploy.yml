@@ -86,14 +86,14 @@ jobs:
 
       - name: Setup files
         run: |
-          ssh -o StrictHostKeyChecking=no  -p 2000 student@172.16.2.40 "mkdir -p ~/apache-docker"
-          scp -o StrictHostKeyChecking=no ./docker-compose.yml  -p 2000 student@172.16.2.40:~/apache-docker/docker-compose.yml
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2000 student@172.16.2.40 "mkdir -p ~/apache-docker"
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ./docker-compose.yml  -p 2000 student@172.16.2.40:~/apache-docker/docker-compose.yml
 
 
       - name: Deploy to dev Server
         run: |
           echo "Connecting to remote server..."
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2000 student@172.16.2.40 << 'EOF'
+          ssh -o StrictHostKeyChecking=no -p 2000 student@172.16.2.40 << 'EOF'
               echo "Navigating to docker-compose directory..."
               cd apache-docker
   
