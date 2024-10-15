@@ -34,7 +34,7 @@ jobs:
         docker push i533542/test01  # Push the image to Docker Hub
         echo "Pushing the image to Docker Hub..."
 
-  deploy:
+  deploy_dev:
       runs-on: self-hosted  # Use your self-hosted runner to deploy on the remote Docker server
       needs: build-and-push  # Ensure the deploy job only runs after build-and-push completes successfully
   
@@ -44,7 +44,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
   
-      - name: Deploy to Remote Server
+      - name: Deploy to dev Server
         run: |
           echo "Connecting to remote server..."
           ssh -o StrictHostKeyChecking=no student@172.16.2.43 << 'EOF'
@@ -60,26 +60,46 @@ jobs:
               echo "Starting new containers..."
               echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker-compose up -d  # Start the new containers
           EOF
-    
-    # - name: Run Tests
-    #   run: |
-    #     # Add your test commands here
-    #     echo "Running tests..."
 
-    # - name: Deploy to Inactive Environment
-    #   run: |
-    #     # Add commands to deploy to the green environment (inactive)
-    #     echo "Deploying to inactive environment..."
+  deploy_test:
+      runs-on: self-hosted  # Use your self-hosted runner to deploy on the remote Docker server
+      needs: build-and-push  # Ensure the deploy job only runs after build-and-push completes successfully
+      
+      steps:
+      - name: Await Approval for Production
+        id: approval
+        run: |
+            echo "Waiting for approval..."
+            # Simulate waiting for approval
+            # You could implement a check here based on your approval process
 
-    # - name: Await Approval for Production
-    #   id: approval
-    #   run: |
-    #     echo "Waiting for approval..."
-    #     # Simulate waiting for approval
-    #     # You could implement a check here based on your approval process
 
-    # - name: Switch to Active Environment
-    #   if: steps.approval.outputs.approved == 'true' # Check if approved
-    #   run: |
-    #     echo "Switching to the inactive environment (now active)..."
-    #     # Add commands to switch the routing in HAProxy or your load balancer 
+      - name: Setup SSH
+        if: steps.approval.outputs.approved == 'true' # Check if approved
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_BLUE }}
+  
+      - name: Deploy to dev Server
+        run: |
+          echo "Connecting to remote server..."
+          ssh -o StrictHostKeyChecking=no student@172.16.2.43 << 'EOF'
+              echo "Navigating to docker-compose directory..."
+              cd apache-docker
+  
+              echo "Pulling the new image..."
+              echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker pull i533542/test01  # Pull the image on the remote Docker server
+
+              echo "Stopping current containers..."
+              echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker-compose down  # Stop the current running containers
+
+              echo "Starting new containers..."
+              echo"${{ secrets.SUDO_PASSWORD }}" | sudo -S docker-compose up -d  # Start the new containers
+          EOF
+
+
+ 
+
+
+
+
