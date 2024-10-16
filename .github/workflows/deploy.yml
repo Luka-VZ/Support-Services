@@ -13,6 +13,9 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest  # Use a GitHub-hosted runner for building and pushing the Docker image
+    concurrency:
+      group: build-${{ github.ref }}  # Use the branch name as the group ID
+      cancel-in-progress: true        # Automatically cancel previous runs
     
     steps:
     - name: Checkout code
