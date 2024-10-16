@@ -115,10 +115,19 @@ jobs:
     environment: production  # This requires manual approval to deploy to 'production'
     
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Setup SSH
       uses: webfactory/ssh-agent@v0.9.0
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_PROXY }}
+
+     
+    - name: Setup files
+      run: |
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ./change_prod.sh student@172.16.2.40:~/change_prod.sh
+
 
     - name: Deploy to dev Server
       run: |
